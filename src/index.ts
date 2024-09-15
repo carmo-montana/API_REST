@@ -1,10 +1,10 @@
+import 'dotenv/config'
 import express from 'express'
+import rotas from './rotas'
 
 const app = express()
-
-app.get('/', (req, res) => {
-    return res.json('Já pode criar sua api.')
-})
+app.use(express.json())
+app.use(rotas)
 
 
 app.listen(process.env.PORT, () => {
