@@ -1,0 +1,11 @@
+services:
+  postgres:
+    container_name: evolucao_ai
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    ports:
+      - 5437:5432
