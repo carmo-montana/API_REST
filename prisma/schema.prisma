@@ -12,3 +12,86 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Usuario {
+  id         Int     @id @default(autoincrement())
+  nome       String
+  email      String  @unique
+  senha      String
+  cargo      String // Ex: "lider", Desenvolvedor ou outro e etc...
+  fotoPerfil String?
+
+  projetoetosLiderados Projeto[] @relation("LiderProjetos")
+
+  tarefasAtribuidas Tarefa[]
+  Comentario        Comentario[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Projeto {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  descricao   String?
+  dataCriacao DateTime @default(now())
+
+  liderId Int
+  lider   Usuario @relation("LiderProjetos", fields: [liderId], references: [id]) // Relaciona ao lider do projeto
+
+  tarefas Tarefa[]
+
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tarefa {
+  id          Int        @id @default(autoincrement())
+  titulo      String
+  descricao   String?
+  status      Status     @default(A_FAZER) // EM PROGRESSO, CONCLUIDO
+  prioridade  prioridade @default(MEDIA) // BAIXA, MEDIA, ALTA
+  dataEntrega DateTime?
+
+  projetoId Int
+  projeto   Projeto @relation(fields: [projetoId], references: [id])
+
+  responsavelId Int?
+  responsavel   Usuario? @relation(fields: [responsavelId], references: [id]) // Usuário responsavel
+
+  comentarios Comentario[]
+
+  // timetamps
+
+  creatdAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comentario {
+  id          Int      @id @default(autoincrement())
+  texto       String
+  dataCriacao DateTime @default(now())
+
+  autorId Int
+  autor   Usuario @relation(fields: [autorId], references: [id])
+
+  tarefaId Int
+  tarefa   Tarefa @relation(fields: [tarefaId], references: [id])
+
+  // timestamps
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Status {
+  A_FAZER
+  EM_PROGRESSO
+  CONCLUIDO
+}
+
+enum prioridade {
+  BAIXA
+  MEDIA
+  ALTA
+}

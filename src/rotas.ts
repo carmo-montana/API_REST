@@ -3,6 +3,6 @@ import controlador from "./controlador/usuarios"
 
 const rotas = Router()
 
-rotas.get('/', new controlador().create)
+rotas.post('/usuario', new controlador().create)
 
 export default rotas
