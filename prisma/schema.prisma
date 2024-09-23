@@ -26,8 +26,10 @@ model Usuario {
   tarefasAtribuidas Tarefa[]
   Comentario        Comentario[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("usuarios")
 }
 
 model Projeto {
@@ -41,8 +43,10 @@ model Projeto {
 
   tarefas Tarefa[]
 
-  createAt  DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  create_at  DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("projetos")
 }
 
 model Tarefa {
@@ -63,8 +67,10 @@ model Tarefa {
 
   // timetamps
 
-  creatdAt  DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  creatd_at  DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("tarefas")
 }
 
 model Comentario {
@@ -80,8 +86,10 @@ model Comentario {
 
   // timestamps
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("comentarios")
 }
 
 enum Status {
