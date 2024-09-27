@@ -14,12 +14,14 @@ datasource db {
 }
 
 model Usuario {
-  id         Int     @id @default(autoincrement())
-  nome       String
-  email      String  @unique
-  senha      String
-  cargo      String // Ex: "lider", Desenvolvedor ou outro e etc...
-  fotoPerfil String?
+  id                   Int       @id @default(autoincrement())
+  nome                 String
+  email                String    @unique
+  senha                String
+  cargo                String // Ex: "lider", Desenvolvedor ou outro e etc...
+  fotoPerfil           String?
+  resetPasswordToken   String? // Token para recuperação de senha
+  resetPasswordExpires DateTime?
 
   projetoetosLiderados Projeto[] @relation("LiderProjetos")
 

@@ -1,27 +1,31 @@
 import { Request, Response } from "express"
 import prisma from "../prisma"
+import * as bcrypt from 'bcrypt'
 
 
 
 export default class controlador {
     async create(req: Request, res: Response) {
-        const { nome, email, senha, cargo } = req.body
-
-        if (!nome || !email || !senha || !cargo) {
-            return res.status(404).json({
-                mensagem: 'Todos os campos são obrigatórios'
-            })
-        }
 
         try {
+            const { nome, email, senha, cargo } = req.body
+            if (!nome || !email || !senha || !cargo) {
+                return res.status(404).json({
+                    mensagem: 'Todos os campos são obrigatórios'
+                })
+            }
+
+            const senhaCriptografada = await bcrypt.hash(senha, 10)
             const cadrasto = await prisma.usuario.create({
                 data: {
                     nome,
                     email,
-                    senha,
+                    senha: senhaCriptografada,
                     cargo
                 }
             })
+
+            const { senha: _, ...usuario } = cadrasto
 
             if (!cadrasto) {
                 return res.status(404).json({
@@ -29,15 +33,16 @@ export default class controlador {
                 })
             }
 
-            return res.status(200).json(cadrasto)
+            return res.status(200).json(usuario)
         }
-        } catch(error) {
-        const erro = error as Error
-        return res.status(500).json({
-            mensagem: 'Erro dentro do servidor do usuarios'
-        })
+        catch (error) {
+            const erro = error as Error
+            return res.status(500).json({
+                mensagem: 'Erro dentro do servidor do usuarios'
+            })
+
+        }
+
     }
 
 }
-
-
