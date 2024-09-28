@@ -7,13 +7,37 @@ import * as bcrypt from 'bcrypt'
 export default class controlador {
     async create(req: Request, res: Response) {
 
+        const { nome, email, senha, cargo } = req.body
+        if (!nome || !email || !senha || !cargo) {
+            return res.status(404).json({
+                mensagem: 'Todos os campos são obrigatórios'
+            })
+        }
+
+
+
+        const senhaForte = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/
+        const validarSenhaForte = senhaForte.test(senha)
+
+        if (!validarSenhaForte) {
+            return res.status(400).json({
+                mensagem: 'Sua senha tem que ter no mínimo 8 caracteres contendo uma letra maiúscula e menúscula e pelo menos um número'
+            })
+        }
+
         try {
-            const { nome, email, senha, cargo } = req.body
-            if (!nome || !email || !senha || !cargo) {
-                return res.status(404).json({
-                    mensagem: 'Todos os campos são obrigatórios'
+            const emailExiste = await prisma.usuario.findUnique({
+                where: {
+                    email
+                }
+            })
+
+            if (emailExiste) {
+                return res.status(400).json({
+                    mensagem: 'E-mail informado já existe'
                 })
             }
+
 
             const senhaCriptografada = await bcrypt.hash(senha, 10)
             const cadrasto = await prisma.usuario.create({

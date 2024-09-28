@@ -26,34 +26,6 @@ export async function validarToken(req: Request, res: Response, next: NextFuncti
             })
         }
 
-        const { nome, email, senha, cargo } = req.body
-
-        if (!nome || !email || !senha || !cargo) {
-            return res.status(404).json({
-                mensagem: 'Todos os campos são obrigatórios'
-            })
-        }
-
-        const verificarSenha = await prisma.usuario.findUnique({
-            where: {
-                email
-            }
-        })
-
-        if (verificarSenha) {
-            return res.status(400).json({
-                mensagem: 'E-mail informado já existe'
-            })
-        }
-
-        const verificacoaDeSenha = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/.test(senha)
-
-        if (!verificacoaDeSenha) {
-            return res.status(400).json({
-                mensagem: 'Sua senha tem que ter no mínimo 8 caracteres contendo uma letra maiúscula e menúscula e pelo menos um número'
-            })
-        }
-
         next()
     } catch (error) {
         if (error instanceof TokenExpiredError) {

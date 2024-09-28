@@ -3,8 +3,8 @@ import controlador from "./controladorUsuario/usuarios"
 import controladorProjeto from "./controllProjeto/projeto"
 import autenticacaoLogin from "./controladorUsuario/login"
 import { validarToken } from "./midlleware/autenticacao"
-import { sortAndDeduplicateDiagnostics } from "typescript"
-import { redefinirSenha } from "./midlleware/authcontrolador"
+
+
 
 
 const rotas = Router()
@@ -12,11 +12,11 @@ const rotas = Router()
 rotas.post('/usuario', new controlador().create)
 rotas.post('/login', new autenticacaoLogin().login)
 
-
 rotas.use(validarToken)
 
-rotas.post('/solicitar-recuperacao-senha', sortAndDeduplicateDiagnostics)
-rotas.post('/redefinir-senha', redefinirSenha)
+rotas.post('/solicitacaoSenha', new autenticacaoLogin().solicitarRecuperacaoSenha)
+rotas.post('/redefinirSenha', new autenticacaoLogin().redefinirSenha)
+
 
 
 rotas.post('/projeto', new controladorProjeto().create)
