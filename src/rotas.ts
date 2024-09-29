@@ -19,8 +19,10 @@ rotas.post('/redefinirSenha', new autenticacaoLogin().redefinirSenha)
 
 
 
-rotas.post('/projeto', new controladorProjeto().create)
-rotas.get('/projeto', new controladorProjeto().detalhar)
+rotas.post('/projetos', new controladorProjeto().create)
+rotas.get('/projetos', new controladorProjeto().detalhar)
+rotas.post('/projetos/: id', new controladorProjeto().lider)
+rotas.delete('/deletar/:id', new controladorProjeto().deletar)
 
 
 

@@ -79,7 +79,7 @@ export default class autenticacaoLogin {
                 subject: 'Recuperação de senha',
                 html: `<p>Você solicitou uma recuperação de senha. Clique <a href="${resetUrl}">aqui</a> para redefinir sua senha. Esse link expira em 1 hora.</p>`,
                 amp: `<!doctype html>
-                <html ⚡4email>
+                <html 4email>
                 <head>
                     <meta charset="utf-8">
                     <style amp4email-boilerplate>body{visibility:hidden}</style>
