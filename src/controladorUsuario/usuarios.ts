@@ -19,7 +19,7 @@ export default class controlador {
         const senhaForte = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/
         const validarSenhaForte = senhaForte.test(senha)
 
-        if (!validarSenhaForte) {
+        if (validarSenhaForte) {
             return res.status(400).json({
                 mensagem: 'Sua senha tem que ter no mínimo 8 caracteres contendo uma letra maiúscula e menúscula e pelo menos um número'
             })

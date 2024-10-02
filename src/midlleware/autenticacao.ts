@@ -11,6 +11,7 @@ export async function validarToken(req: Request, res: Response, next: NextFuncti
             mensagem: 'Falha na autenticação'
         })
     }
+
     let cleanedToken = authorization.replace("Bearer ", "")
     try {
         jwt.verify(cleanedToken, process.env.JWT_SECRET as string) as { id: number }

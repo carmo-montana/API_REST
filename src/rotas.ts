@@ -3,20 +3,19 @@ import controlador from "./controladorUsuario/usuarios"
 import controladorProjeto from "./controllProjeto/projeto"
 import autenticacaoLogin from "./controladorUsuario/login"
 import { validarToken } from "./midlleware/autenticacao"
+import Multer from "./multer"
 
 
 
 
 const rotas = Router()
 
-rotas.post('/usuario', new controlador().create)
+rotas.post('/usuario', Multer.single('fotoPerfil'), new controlador().create)
 rotas.post('/login', new autenticacaoLogin().login)
+rotas.get('/recuperar', new autenticacaoLogin().solicitarRecuperacaoSenha)
+rotas.patch('/reset-senha/:resetToken', new autenticacaoLogin().redefinirSenha)
 
 rotas.use(validarToken)
-
-rotas.post('/solicitacaoSenha', new autenticacaoLogin().solicitarRecuperacaoSenha)
-rotas.post('/redefinirSenha', new autenticacaoLogin().redefinirSenha)
-
 
 
 rotas.post('/projetos', new controladorProjeto().create)
