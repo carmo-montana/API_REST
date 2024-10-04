@@ -1,6 +1,8 @@
 import { Request, Response } from "express"
 import prisma from "../prisma"
 import * as bcrypt from 'bcrypt'
+import uploadImage from "../uploads/img"
+
 
 
 
@@ -8,6 +10,10 @@ export default class controlador {
     async create(req: Request, res: Response) {
 
         const { nome, email, senha, cargo } = req.body
+
+        const img = req.file
+        // console.log({ ...req.body })
+
         if (!nome || !email || !senha || !cargo) {
             return res.status(404).json({
                 mensagem: 'Todos os campos são obrigatórios'
@@ -55,6 +61,11 @@ export default class controlador {
                 return res.status(404).json({
                     mensagem: 'Algo deu erro no cadrasto do usuarios'
                 })
+            }
+
+            if (img) {
+                const image = await uploadImage(`profile/${img!.originalname}`, img!.buffer, img!.mimetype)
+                console.log(image)
             }
 
             return res.status(200).json(usuario)
