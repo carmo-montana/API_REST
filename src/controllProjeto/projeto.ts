@@ -14,6 +14,12 @@ export default class controladorProjeto {
                 }
             })
 
+            if (!novoProjeto) {
+                return res.status(404).json({
+                    mensagem: 'Erro á atribuir o projeto ao lider'
+                })
+            }
+
             return res.status(200).json(novoProjeto)
         } catch (error) {
             const erro = error as Error
@@ -51,11 +57,12 @@ export default class controladorProjeto {
     }
 
     async lider(req: Request, res: Response) {
-        const { projetoId, liderId } = req.body
+        const { projetoId } = req.params
+        const { liderId } = req.body
 
         try {
             const projeto = await prisma.projeto.findUnique({
-                where: { id: projetoId }
+                where: { id: Number(projetoId) }
             })
 
             const lider = await prisma.usuario.findUnique({
@@ -63,19 +70,19 @@ export default class controladorProjeto {
             })
 
             if (!projeto) {
-                return res.status(403).json({
+                return res.status(404).json({
                     erro: 'Projeto não encontrado'
                 })
             }
 
             if (!lider) {
-                return res.status(403).json({
+                return res.status(404).json({
                     erro: 'Usuário (lider) não encontrado'
                 })
             }
 
             const ProjetoAtualizado = await prisma.projeto.update({
-                where: { id: projetoId },
+                where: { id: Number(projetoId) },
                 data: {
                     id: liderId
                 }

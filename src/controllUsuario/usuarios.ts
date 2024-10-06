@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import prisma from "../prisma"
 import * as bcrypt from 'bcrypt'
-import uploadImage from "../uploads/img"
+import uploadImage from "../imagem/img"
 
 
 

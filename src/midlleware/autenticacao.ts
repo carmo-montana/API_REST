@@ -39,4 +39,6 @@ export async function validarToken(req: Request, res: Response, next: NextFuncti
             message: erro.message
         })
     }
+
 }
+

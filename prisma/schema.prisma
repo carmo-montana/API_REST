@@ -25,6 +25,8 @@ model Usuario {
 
   projetoetosLiderados Projeto[] @relation("LiderProjetos")
 
+  projetoParticipantes Projeto[] @relation("ProjetoMembro")
+
   tarefasAtribuidas Tarefa[]
   Comentario        Comentario[]
 
@@ -35,13 +37,13 @@ model Usuario {
 }
 
 model Projeto {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   nome        String
   descricao   String?
-  dataCriacao DateTime @default(now())
-
-  liderId Int
-  lider   Usuario @relation("LiderProjetos", fields: [liderId], references: [id]) // Relaciona ao lider do projeto
+  dataCriacao DateTime  @default(now())
+  membro      Usuario[] @relation("ProjetoMembro")
+  liderId     Int
+  lider       Usuario   @relation("LiderProjetos", fields: [liderId], references: [id]) // Relaciona ao lider do projeto
 
   tarefas Tarefa[]
 
