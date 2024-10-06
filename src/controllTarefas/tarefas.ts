@@ -1,5 +1,6 @@
-import { Request, Response } from "express";
-import prisma from "../prisma";
+import { Request, response, Response } from "express"
+import prisma from "../prisma"
+import { sendEmailNotificacoa } from "../utilitarios/notificacao"
 
 export default class controladorTarefas {
     async create(req: Request, res: Response) {
@@ -16,6 +17,18 @@ export default class controladorTarefas {
                     responsavel: responsavelId ? { connect: { id: responsavelId } } : undefined
                 }
             })
+
+            const responsavel = await prisma.usuario.findUnique({
+                where: { id: responsavelId }
+            })
+
+            if (responsavel?.email) {
+                await sendEmailNotificacoa(
+                    responsavel.email,
+                    'Nova Tarefa Atribuída',
+                    `Você foi atribuído a uma nova tarefa: ${titulo}`
+                )
+            }
 
             if (tarefas) {
                 return res.status(201).json({

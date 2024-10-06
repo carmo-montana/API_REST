@@ -28,6 +28,7 @@ rotas.delete('/deletar/:id', new controladorProjeto().deletar)
 
 
 rotas.post('/tarefas', new controladorTarefas().create)
+rotas.put('/tarefas',)
 rotas.patch('/tarefas/:id/status', new controladorTarefas().atualizarStatusTarefa)
 rotas.patch('/tarefas/:id/atribuir-responsavel', new controladorTarefas().atribuirResponsavelTarefa)
 rotas.patch('/tarefas/:id', new controladorTarefas().editarTarefa)
