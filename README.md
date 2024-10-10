@@ -5,27 +5,32 @@
 
 ## Entidades e Funcionalidade
 
+## Como Usar
+
+1. **Instalação**: Der um "npm install" para instalar as bibliotecas para API funcionar.
+2. **uso**: Certifique-se de rodar o comando "docker compose up -d" e rodar API com "npm run dev".
+
 1. Usuário:
 
- - Campos: id, nome, email, senha, cargo, foto de perfil
- - Funcionalidade:
+ - **Campos**: `id`, `nome`, `email`, `senha`, `cargo`, `foto` de `perfil`
+ - **Funcionalidade**:
    - Registro de novos usuários
    - Login com autemticação JWT
    - Recuperação de senha
 
-2. Projeto:
+2. **Projeto**:
 
- - Campos: id, nome, descrição, data_criação, líder_projeto(relacionamento com Usuário)
- - Funcionalidade:
+ - **Campos**: `id`, `nome`, `descrição`, `data_criação`, `líder_projeto`(relacionamento com Usuário)
+ - **Funcionalidade**:
    - Criação de novos projetos
    - listagem de todos os projetos de um usuário
    - Atribuição de um líder para o projeto
    - Edição e exclusão de projetos
 
-3. Tarefa: 
+3. **Tarefa**: 
  
- - Campos: id, título, descrição, status (A FAZER, EM PROGRESSO, CONCLUÍDO), prioridade, data_entrega, responsável (relacionamento com Usuário), projeto (relacionamento com projeto)
- - Funcionalidade:
+ - **Campos**: `id`, `título`, `descrição`, `status` (A FAZER, EM PROGRESSO, CONCLUÍDO), `prioridade`, `data_entrega`, `responsável` (relacionamento com Usuário), `projeto` (relacionamento com projeto)
+ - **Funcionalidade**:
    - Criação de tarefas dentro de um projeto
    - Atualização do status da tarefa 
    - Atribuição de um responsável para a tarefa
