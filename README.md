@@ -49,3 +49,9 @@
 
 
 #### ⚠️ Essa API demonstra habilidades em modelagem de dados, autenticação com JWT, gerenciamento de relacionamentos entre entidades, e controle de permissões e autorizações, além de uma potencial integração com serviços de notificação ou WebSockets para atualizações em tempo real.
+
+
+
+## Autor
+
+**Pedro Oliveira Do Carmo**
