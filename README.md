@@ -7,8 +7,8 @@
 
 ## Como Usar
 
-1. **Instalação**: Der um "npm install" para instalar as bibliotecas para API funcionar.
-2. **uso**: Certifique-se de rodar o comando "docker compose up -d" e rodar API com "npm run dev".
+ **Instalação**: Der um "npm install" para instalar as bibliotecas para API funcionar.
+ **uso**: Certifique-se de rodar o comando "docker compose up -d" e rodar API com "npm run dev".
 
 1. Usuário:
 
