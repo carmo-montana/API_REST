@@ -7,6 +7,7 @@ import Multer from "./multer"
 import controladorTarefas from "./controllTarefas/tarefas"
 import controladorComentarios from "./controllComentarios/comentarios"
 import autenticacaolider from "./midlleware/autentProjeto"
+import { rootLogger } from "ts-jest"
 
 
 
@@ -41,7 +42,6 @@ rotas.get('/tarefas/:id/comentarios', new controladorComentarios().listarComenta
 rotas.patch('/comentarios/:id', new controladorComentarios().editarComentarios)
 rotas.delete('/comentarios/:id', new controladorComentarios().deletar)
 
-
-rotas.use(new autenticacaolider().ProjetCargo)
+rotas.post('/projeto/:projetoId/tarefas', new autenticacaolider().verificarLideranca, new autenticacaolider().authorizeProjetMembor)
 
 export default rotas

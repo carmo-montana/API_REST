@@ -94,24 +94,39 @@ export default class controladorTarefas {
     }
 
     async editarTarefa(req: Request, res: Response) {
-        const { tarefaId, dadosAtualizados } = req.body
+        const { id } = req.params
+        const { projetoId, titulo, descricao, prioridade, dataEntrega, responsavelId } = req.body
 
         try {
-            const tarefaEditada = await prisma.tarefa.update({
-                where: { id: tarefaId },
-                data: dadosAtualizados
+            const tarefa = await prisma.tarefa.update({
+                where: { id: Number(id) },
+                data: {
+                    titulo,
+                    descricao,
+                    prioridade,
+                    dataEntrega,
+                    responsavel: responsavelId ? { connect: { id: responsavelId } } : undefined
+                },
             })
 
-            if (tarefaEditada) {
-                return res.status(201).json({
-                    mensagem: 'Tarefa editada com sucesso'
-                })
+
+            const responsavel = await prisma.usuario.findUnique({
+                where: { id: responsavelId }
+            })
+
+
+            if (responsavel?.email) {
+                await sendEmailNotificacoa(
+                    responsavel.email,
+                    'Tarefa Atualizada',
+                    `A tarefa "${titulo}" foi atualizada. Novo status: ${titulo}`
+                );
             }
 
-            return res.status(200).json(tarefaEditada)
+            return res.status(200).json(tarefa)
         } catch (error) {
             return res.status(500).json({
-                erro: 'Erro ao editar tarefa'
+                error: 'Erro ao atualizar a tarefa'
             })
         }
     }
